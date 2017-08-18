@@ -1,5 +1,7 @@
 #pragma once
 #include "ADT.h"
+#include <exception>
+#include <stdexcpt.h>
 
 class Queue : ADT
 {
@@ -12,6 +14,15 @@ public:
     bool isEmpty() override;
     std::string toString() override;
     void reverse();
+
+
+    class queueIsEmpty:std::runtime_error
+    {
+    public:
+        queueIsEmpty (const char* what_arg);
+        queueIsEmpty (const std::string& what_arg);
+    };
+
 
 protected:
     /*
@@ -26,5 +37,5 @@ protected:
     Element* root = nullptr;     // root element for queue.
     Element* current = nullptr;
 
-
+    
 };

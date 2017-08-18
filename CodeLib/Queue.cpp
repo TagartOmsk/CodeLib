@@ -14,7 +14,9 @@ int Queue::pop ()
         delete temp;
         return var;
     }
-    return 0;//throw error
+    std::string a1 = "Ty Pidor";
+    queueIsEmpty A1 (a1);
+    return 0;
 }
 
 void Queue::push (int value)
@@ -114,4 +116,13 @@ Queue::~Queue ()
         }
         delete root;
     }
+}
+
+Queue::queueIsEmpty::queueIsEmpty (const char* what_arg) : runtime_error (what_arg)
+{
+
+}
+Queue::queueIsEmpty::queueIsEmpty (const std::string& what_arg) : runtime_error (what_arg)
+{
+    
 }
