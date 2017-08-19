@@ -2,25 +2,28 @@
 #include "ADT.h"
 #include <exception>
 #include <stdexcpt.h>
-
+#define queueEmptyExceptMessage "Queue is empty"
 class Queue : ADT
 {
 public:
     Queue();
+    Queue (Queue&);
     ~Queue() override;
     void push(int) override;
+    void swap (Queue*);
     int pop() override;
     int get() override;
     bool isEmpty() override;
-    std::string toString() override;
-    void reverse();
+    std::string toString() noexcept override;
+    void reverse() noexcept;
 
 
-    class queueIsEmpty:std::runtime_error
+    class queueIsEmpty : public std::runtime_error
     {
     public:
         queueIsEmpty (const char* what_arg);
         queueIsEmpty (const std::string& what_arg);
+        queueIsEmpty ();
     };
 
 

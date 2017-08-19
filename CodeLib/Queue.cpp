@@ -1,9 +1,22 @@
+#include "stdafx.h"
 #include "Queue.h"
 Queue::Queue ()
 {
 
 }
-
+Queue::Queue (Queue& Ex)
+{
+    if (!Ex.isEmpty())
+    {
+        Ex.current = Ex.root;
+        while (Ex.current->next != nullptr)
+        {
+            this->push (Ex.current->value);
+            Ex.current = Ex.current->next;
+        }
+        this->push (Ex.current->value);
+    }
+}
 int Queue::pop ()
 {
     if (root != nullptr) 
@@ -14,9 +27,14 @@ int Queue::pop ()
         delete temp;
         return var;
     }
-    std::string a1 = "Ty Pidor";
-    queueIsEmpty A1 (a1);
-    return 0;
+    throw queueIsEmpty();
+    //return 0;
+}
+
+void Queue::swap ( Queue* no2)
+{
+    std::swap (this->root, no2->root);
+    std::swap (this->current, no2->current);
 }
 
 void Queue::push (int value)
@@ -50,7 +68,7 @@ bool Queue::isEmpty ()
     else return false;
 }
 
-std::string Queue::toString ()
+std::string Queue::toString () noexcept
 {
     std::string result="";
     char a[10];
@@ -60,20 +78,21 @@ std::string Queue::toString ()
         current = root;
         while (current->next != nullptr) 
         {
-            _itoa_s (current->value, a, 10);
+            itoa (current->value, a, 10);
             result += a;
             result += " ";
             current = current->next;
         }
-        _itoa_s (current->value, a, 10);
+        itoa (current->value, a, 10);
         result += a;
         result += " ";
     }
     return result;
 }
 
-void Queue::reverse ()
+void Queue::reverse () noexcept
 {
+    if (isEmpty ())return;
     Element* temp = nullptr;
     Element* temp2 = nullptr;
     bool isLast = false;
@@ -120,9 +139,13 @@ Queue::~Queue ()
 
 Queue::queueIsEmpty::queueIsEmpty (const char* what_arg) : runtime_error (what_arg)
 {
-
+    
 }
 Queue::queueIsEmpty::queueIsEmpty (const std::string& what_arg) : runtime_error (what_arg)
+{
+    
+}
+Queue::queueIsEmpty::queueIsEmpty () : runtime_error(queueEmptyExceptMessage)
 {
     
 }
